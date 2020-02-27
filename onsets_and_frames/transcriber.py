@@ -50,10 +50,13 @@ class ConvStack(nn.Module):
 
 
 class OnsetsAndFrames(nn.Module):
+    #output_feature is MAX_MIDI-MIN_MIDI +1 =88
     def __init__(self, input_features, output_features, model_complexity=48):
         super().__init__()
 
         model_size = model_complexity * 16
+
+        #sug: output_size is half so that two direction together output_size 
         sequence_model = lambda input_size, output_size: BiLSTM(input_size, output_size // 2)
 
         self.onset_stack = nn.Sequential(
@@ -87,6 +90,8 @@ class OnsetsAndFrames(nn.Module):
         onset_pred = self.onset_stack(mel)
         offset_pred = self.offset_stack(mel)
         activation_pred = self.frame_stack(mel)
+        # sgu: why to use detach()?
+        # tensor.detach() :  creates a tensor that shares storage with tensor that does not require grad
         combined_pred = torch.cat([onset_pred.detach(), offset_pred.detach(), activation_pred], dim=-1)
         frame_pred = self.combined_stack(combined_pred)
         velocity_pred = self.velocity_stack(mel)

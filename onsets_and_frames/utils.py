@@ -8,7 +8,7 @@ from torch.nn.modules.module import _addindent
 
 def cycle(iterable):
     while True:
-        for item in iterable:
+        for item in iterable: #shuffle happens during calls to iter(iterable)
             yield item
 
 

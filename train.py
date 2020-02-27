@@ -28,7 +28,7 @@ def config():
 
     batch_size = 8
     sequence_length = 327680
-    model_complexity = 48
+    model_complexity = 48 #sgu: this number x 16 is the model_size
 
     if torch.cuda.is_available() and torch.cuda.get_device_properties(torch.cuda.current_device()).total_memory < 10e9:
         batch_size //= 2
@@ -56,7 +56,7 @@ def train(logdir, device, iterations, resume_iteration, checkpoint_interval, tra
     print_config(ex.current_run)
 
     os.makedirs(logdir, exist_ok=True)
-    writer = SummaryWriter(logdir)
+    writer = SummaryWriter(logdir)  #sgu:?
 
     train_groups, validation_groups = ['train'], ['validation']
 
@@ -79,13 +79,13 @@ def train(logdir, device, iterations, resume_iteration, checkpoint_interval, tra
         optimizer = torch.optim.Adam(model.parameters(), learning_rate)
         resume_iteration = 0
     else:
-        model_path = os.path.join(logdir, f'model-{resume_iteration}.pt')
+        model_path = os.path.join(logdir, f'model-{resume_iteration}.pt') #sgu: where and when  was the checkpoint? 
         model = torch.load(model_path)
         optimizer = torch.optim.Adam(model.parameters(), learning_rate)
         optimizer.load_state_dict(torch.load(os.path.join(logdir, 'last-optimizer-state.pt')))
 
     summary(model)
-    scheduler = StepLR(optimizer, step_size=learning_rate_decay_steps, gamma=learning_rate_decay_rate)
+    scheduler = StepLR(optimizer, step_size=learning_rate_decay_steps, gamma=learning_rate_decay_rate) #sgu: use learning rate scheduler; do we need it?
 
     loop = tqdm(range(resume_iteration + 1, iterations + 1))
     for i, batch in zip(loop, cycle(loader)):

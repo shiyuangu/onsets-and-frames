@@ -54,6 +54,9 @@ class STFT(torch.nn.Module):
 
         forward_transform = F.conv1d(
             input_data,
+
+            #sgu: This is equiv. to constant tensor in earlier version of pytorch; just pass in constant tensor for recent verrsion of pytorch
+            # https://pytorch.org/docs/stable/autograd.html#variable-deprecated
             Variable(self.forward_basis, requires_grad=False),
             stride=self.hop_length,
             padding=0)
@@ -63,6 +66,8 @@ class STFT(torch.nn.Module):
         imag_part = forward_transform[:, cutoff:, :]
 
         magnitude = torch.sqrt(real_part**2 + imag_part**2)
+
+        #sgu: will this variables get updated? Seems not since it's not used at all downstream   in MelSprectrogram
         phase = torch.autograd.Variable(torch.atan2(imag_part.data, real_part.data))
 
         return magnitude, phase
@@ -99,4 +104,6 @@ class MelSpectrogram(torch.nn.Module):
 
 # the default melspectrogram converter across the project
 melspectrogram = MelSpectrogram(N_MELS, SAMPLE_RATE, WINDOW_LENGTH, HOP_LENGTH, mel_fmin=MEL_FMIN, mel_fmax=MEL_FMAX)
+
+#DEFAULT_DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
 melspectrogram.to(DEFAULT_DEVICE)

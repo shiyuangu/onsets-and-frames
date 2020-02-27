@@ -7,11 +7,17 @@ class BiLSTM(nn.Module):
 
     def __init__(self, input_features, recurrent_features):
         super().__init__()
-        self.rnn = nn.LSTM(input_features, recurrent_features, batch_first=True, bidirectional=True)
+        #sgu: hidden_size = recurrent_features
+        # since batch_first = True, input and output shape is (batch, seq, feature)
+        self.rnn = nn.LSTM(input_features, recurrent_features, batch_first=True, bidirectional=True) 
 
     def forward(self, x):
+        """
+        sgu:
+        x: shape (batch, seq, model_size) where model_size = model_complexity * 16 
+        """
         if self.training:
-            return self.rnn(x)[0]
+            return self.rnn(x)[0] #(h_0, c_0) are zeros 
         else:
             # evaluation mode: support for longer sequences that do not fit in memory
             batch_size, sequence_length, input_features = x.shape
