@@ -59,12 +59,13 @@ class OnsetsAndFrames(nn.Module):
         #sug: output_size is half so that two direction together output_size 
         sequence_model = lambda input_size, output_size: BiLSTM(input_size, output_size // 2)
 
-        self.onset_stack = nn.Sequential(
-            ConvStack(input_features, model_size),
-            sequence_model(model_size, model_size),
-            nn.Linear(model_size, output_features),
-            nn.Sigmoid()
-        )
+        #sgu: experiment for perfect onset predictor 
+        # self.onset_stack = nn.Sequential(
+        #     ConvStack(input_features, model_size),
+        #     sequence_model(model_size, model_size),
+        #     nn.Linear(model_size, output_features),
+        #     nn.Sigmoid()
+        # )
         self.offset_stack = nn.Sequential(
             ConvStack(input_features, model_size),
             sequence_model(model_size, model_size),
@@ -86,26 +87,35 @@ class OnsetsAndFrames(nn.Module):
             nn.Linear(model_size, output_features)
         )
 
-    def forward(self, mel):
-        onset_pred = self.onset_stack(mel)
+    def forward(self, x):
+    #def forward(self, mel): #sgu:ex_perfect_onset 
+        #onset_pred = self.onset_stack(mel) #sgu:ex_perfect_onset
+        mel, onset_pred = x  #sgu:ex_perfect_onset
+        
         offset_pred = self.offset_stack(mel)
         activation_pred = self.frame_stack(mel)
         # sgu: why to use detach()?
         # tensor.detach() :  creates a tensor that shares storage with tensor that does not require grad
-        combined_pred = torch.cat([onset_pred.detach(), offset_pred.detach(), activation_pred], dim=-1)
+        onset_pred = onset_pred.reshape(*offset_pred.shape) #sgu:ex_perfect_onset
+        combined_pred = torch.cat([onset_pred.detach(), offset_pred.detach(), activation_pred], dim=-1) 
+
         frame_pred = self.combined_stack(combined_pred)
         velocity_pred = self.velocity_stack(mel)
+
+        
         return onset_pred, offset_pred, activation_pred, frame_pred, velocity_pred
 
     def run_on_batch(self, batch):
-        audio_label = batch['audio']
-        onset_label = batch['onset']
-        offset_label = batch['offset']
-        frame_label = batch['frame']
-        velocity_label = batch['velocity']
+        audio_label = batch['audio'] #shape: (8, 327680)
+        onset_label = batch['onset'] #shape: (8, 640, 88) where 640=n_steps 
+        offset_label = batch['offset'] #shape: (8, 640, 88)
+        frame_label = batch['frame'] #shape: (8, 640, 88)
+        velocity_label = batch['velocity'] #shape: (8, 640, 88)
 
+        #mel shape: (8, 640, 229) 
         mel = melspectrogram(audio_label.reshape(-1, audio_label.shape[-1])[:, :-1]).transpose(-1, -2)
-        onset_pred, offset_pred, _, frame_pred, velocity_pred = self(mel)
+        #onset_pred, offset_pred, _, frame_pred, velocity_pred = self(mel)
+        onset_pred, offset_pred, _, frame_pred, velocity_pred = self((mel,onset_label)) #sgu:ex_perfect_onset 
 
         predictions = {
             'onset': onset_pred.reshape(*onset_label.shape),
@@ -120,6 +130,8 @@ class OnsetsAndFrames(nn.Module):
             'loss/frame': F.binary_cross_entropy(predictions['frame'], frame_label),
             'loss/velocity': self.velocity_loss(predictions['velocity'], velocity_label, onset_label)
         }
+
+
 
         return predictions, losses
 
