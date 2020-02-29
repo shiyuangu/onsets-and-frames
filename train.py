@@ -92,13 +92,18 @@ def train(logdir, device, iterations, resume_iteration, checkpoint_interval, tra
         predictions, losses = model.run_on_batch(batch)
 
         loss = sum(losses.values())
+
         optimizer.zero_grad()
         loss.backward()
+
+        #sgu: bug? clip_gradient should happen before optimizer.step()
+        if clip_gradient_norm:
+            clip_grad_norm_(model.parameters(), clip_gradient_norm)
+            
         optimizer.step()
         scheduler.step()
 
-        if clip_gradient_norm:
-            clip_grad_norm_(model.parameters(), clip_gradient_norm)
+
 
         for key, value in {'loss': loss, **losses}.items():
             writer.add_scalar(key, value.item(), global_step=i)

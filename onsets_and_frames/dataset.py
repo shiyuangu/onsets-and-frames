@@ -101,8 +101,8 @@ class PianoRollAudioDataset(Dataset):
         audio = torch.ShortTensor(audio)
         audio_length = len(audio)
 
-        n_keys = MAX_MIDI - MIN_MIDI + 1
-        n_steps = (audio_length - 1) // HOP_LENGTH + 1
+        n_keys = MAX_MIDI - MIN_MIDI + 1 #sgu: 88 
+        n_steps = (audio_length - 1) // HOP_LENGTH + 1 #sgu: every 32ms a step
 
         label = torch.zeros(n_steps, n_keys, dtype=torch.uint8)
         velocity = torch.zeros(n_steps, n_keys, dtype=torch.uint8)
@@ -111,6 +111,8 @@ class PianoRollAudioDataset(Dataset):
         midi = np.loadtxt(tsv_path, delimiter='\t', skiprows=1)
 
         for onset, offset, note, vel in midi:
+
+            #sgu: this might cause error
             left = int(round(onset * SAMPLE_RATE / HOP_LENGTH))
             onset_right = min(n_steps, left + HOPS_IN_ONSET)
             frame_right = int(round(offset * SAMPLE_RATE / HOP_LENGTH))
