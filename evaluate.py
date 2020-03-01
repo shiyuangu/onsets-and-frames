@@ -67,6 +67,7 @@ def evaluate(data, model, onset_threshold=0.5, frame_threshold=0.5, save_path=No
         metrics['metric/note-with-velocity/overlap'].append(o)
 
         p, r, f, o = evaluate_notes_with_velocity(i_ref, p_ref, v_ref, i_est, p_est, v_est, velocity_tolerance=0.1)
+
         metrics['metric/note-with-offsets-and-velocity/precision'].append(p)
         metrics['metric/note-with-offsets-and-velocity/recall'].append(r)
         metrics['metric/note-with-offsets-and-velocity/f1'].append(f)

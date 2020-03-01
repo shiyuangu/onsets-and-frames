@@ -8,7 +8,7 @@ def extract_notes(onsets, frames, velocity, onset_threshold=0.5, frame_threshold
 
     Parameters
     ----------
-    onsets: torch.FloatTensor, shape = [frames, bins]
+    onsets: torch.FloatTensor, shape = [frames, bins] (default setting,bins=88)
     frames: torch.FloatTensor, shape = [frames, bins]
     velocity: torch.FloatTensor, shape = [frames, bins]
     onset_threshold: float
