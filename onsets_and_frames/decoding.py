@@ -8,7 +8,7 @@ def extract_notes(onsets, frames, velocity, onset_threshold=0.5, frame_threshold
 
     Parameters
     ----------
-    onsets: torch.FloatTensor, shape = [frames, bins]
+    onsets: torch.FloatTensor, shape = [frames, bins] (default setting,bins=88)
     frames: torch.FloatTensor, shape = [frames, bins]
     velocity: torch.FloatTensor, shape = [frames, bins]
     onset_threshold: float
@@ -36,6 +36,7 @@ def extract_notes(onsets, frames, velocity, onset_threshold=0.5, frame_threshold
         offset = frame
         velocity_samples = []
 
+        #sgu: It's possible to count an interval and its sub-interval again. 
         while onsets[offset, pitch].item() or frames[offset, pitch].item():
             if onsets[offset, pitch].item():
                 velocity_samples.append(velocity[offset, pitch].item())
