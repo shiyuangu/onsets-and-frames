@@ -76,8 +76,10 @@ class OnsetsAndFrames(nn.Module):
             nn.Sigmoid()
         )
         self.frame_stack = nn.Sequential(
-            ConvStack(input_features, model_size),
-            nn.Linear(model_size, output_features),
+            #sgu: experiment 2: 
+            #ConvStack(input_features, model_size), 
+            #nn.Linear(model_size, output_features),
+            nn.Linear(input_features, output_features),
             nn.Sigmoid()
         )
         self.combined_stack = nn.Sequential(
