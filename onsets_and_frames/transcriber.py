@@ -13,6 +13,9 @@ from .mel import melspectrogram
 
 
 class ConvStack(nn.Module):
+    """
+    This is the acoustic model in the onset and frame paper 
+    """
     def __init__(self, input_features, output_features):
         super().__init__()
 
@@ -42,7 +45,7 @@ class ConvStack(nn.Module):
         )
 
     def forward(self, mel):
-        x = mel.view(mel.size(0), 1, mel.size(1), mel.size(2))
+        x = mel.view(mel.size(0), 1, mel.size(1), mel.size(2)) #1 is the channel
         x = self.cnn(x)
         x = x.transpose(1, 2).flatten(-2)
         x = self.fc(x)
@@ -51,12 +54,13 @@ class ConvStack(nn.Module):
 
 class OnsetsAndFrames(nn.Module):
     #output_feature is MAX_MIDI-MIN_MIDI +1 =88
+    #input_features = N_MEL = 229 by default 
     def __init__(self, input_features, output_features, model_complexity=48):
         super().__init__()
 
         model_size = model_complexity * 16
 
-        #sug: output_size is half so that two direction together output_size 
+        #sgu: output_size is half so that two direction together output_size 
         sequence_model = lambda input_size, output_size: BiLSTM(input_size, output_size // 2)
 
         self.onset_stack = nn.Sequential(
