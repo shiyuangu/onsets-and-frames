@@ -10,7 +10,7 @@ from torch import nn
 
 from .lstm import BiLSTM
 from .mel import melspectrogram
-
+from .Transformer_amt import Transformer_AMT
 
 class ConvStack(nn.Module):
     """
@@ -51,7 +51,6 @@ class ConvStack(nn.Module):
         x = self.fc(x)
         return x
 
-
 class OnsetsAndFrames(nn.Module):
     #output_feature is MAX_MIDI-MIN_MIDI +1 =88
     #input_features = N_MEL = 229 by default 
@@ -61,28 +60,33 @@ class OnsetsAndFrames(nn.Module):
         model_size = model_complexity * 16
 
         #sgu: output_size is half so that two direction together output_size 
-        sequence_model = lambda input_size, output_size: BiLSTM(input_size, output_size // 2)
-
+        #sequence_model = lambda input_size, output_size: BiLSTM(input_size, output_size // 2)
+        sequence_model = lambda input_size: Transformer(input_size)
         self.onset_stack = nn.Sequential(
-            ConvStack(input_features, model_size),
-            sequence_model(model_size, model_size),
-            nn.Linear(model_size, output_features),
+            #ConvStack(input_features, model_size),
+            #sequence_model(model_size, model_size),
+            sequence_model(input_features),
+            nn.Linear(input_features, output_features),
             nn.Sigmoid()
         )
         self.offset_stack = nn.Sequential(
-            ConvStack(input_features, model_size),
-            sequence_model(model_size, model_size),
-            nn.Linear(model_size, output_features),
+            #ConvStack(input_features, model_size),
+            #sequence_model(model_size, model_size),
+            sequence_model(input_features),
+            nn.Linear(input_features, output_features),
             nn.Sigmoid()
         )
         self.frame_stack = nn.Sequential(
-            ConvStack(input_features, model_size),
-            nn.Linear(model_size, output_features),
+            #ConvStack(input_features, model_size),
+            #Transformer_AMT(input_features),
+            sequence_model(input_features),
+            nn.Linear(input_features, output_features),
             nn.Sigmoid()
         )
         self.combined_stack = nn.Sequential(
-            sequence_model(output_features * 3, model_size),
-            nn.Linear(model_size, output_features),
+            #sequence_model(output_features * 3, model_size),
+            sequence_model(3 * output_features),
+            nn.Linear(3 * output_features, output_features),
             nn.Sigmoid()
         )
         self.velocity_stack = nn.Sequential(
