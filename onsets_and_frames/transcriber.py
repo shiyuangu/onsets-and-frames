@@ -10,7 +10,7 @@ from torch import nn
 
 from .lstm import BiLSTM
 from .mel import melspectrogram
-from .Transformer_amt import Transformer_AMT
+from .transformer_amt import Transformer_AMT
 
 class ConvStack(nn.Module):
     """
@@ -61,7 +61,7 @@ class OnsetsAndFrames(nn.Module):
 
         #sgu: output_size is half so that two direction together output_size 
         #sequence_model = lambda input_size, output_size: BiLSTM(input_size, output_size // 2)
-        sequence_model = lambda input_size: Transformer(input_size)
+        sequence_model = lambda input_size: Transformer_AMT(input_size)
         self.onset_stack = nn.Sequential(
             #ConvStack(input_features, model_size),
             #sequence_model(model_size, model_size),

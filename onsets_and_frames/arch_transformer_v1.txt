@@ -1,0 +1,370 @@
+OnsetsAndFrames(
+  (onset_stack): Sequential(
+    (0): Transformer_AMT(
+      (encoder): TransformerEncoder(
+        (layers): ModuleList(
+          (0): TransformerEncoderLayer(
+            (self_attn): MultiheadAttention(
+              (out_proj): Linear(in_features=256, out_features=256, bias=True), 65,792 params
+            ), 263,168 params
+            (linear1): Linear(in_features=256, out_features=2048, bias=True), 526,336 params
+            (dropout): Dropout(p=0.1, inplace=False), 0 params
+            (linear2): Linear(in_features=2048, out_features=256, bias=True), 524,544 params
+            (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True), 512 params
+            (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True), 512 params
+            (dropout1): Dropout(p=0.1, inplace=False), 0 params
+            (dropout2): Dropout(p=0.1, inplace=False), 0 params
+          ), 1,315,072 params
+          (1): TransformerEncoderLayer(
+            (self_attn): MultiheadAttention(
+              (out_proj): Linear(in_features=256, out_features=256, bias=True), 65,792 params
+            ), 263,168 params
+            (linear1): Linear(in_features=256, out_features=2048, bias=True), 526,336 params
+            (dropout): Dropout(p=0.1, inplace=False), 0 params
+            (linear2): Linear(in_features=2048, out_features=256, bias=True), 524,544 params
+            (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True), 512 params
+            (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True), 512 params
+            (dropout1): Dropout(p=0.1, inplace=False), 0 params
+            (dropout2): Dropout(p=0.1, inplace=False), 0 params
+          ), 1,315,072 params
+          (2): TransformerEncoderLayer(
+            (self_attn): MultiheadAttention(
+              (out_proj): Linear(in_features=256, out_features=256, bias=True), 65,792 params
+            ), 263,168 params
+            (linear1): Linear(in_features=256, out_features=2048, bias=True), 526,336 params
+            (dropout): Dropout(p=0.1, inplace=False), 0 params
+            (linear2): Linear(in_features=2048, out_features=256, bias=True), 524,544 params
+            (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True), 512 params
+            (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True), 512 params
+            (dropout1): Dropout(p=0.1, inplace=False), 0 params
+            (dropout2): Dropout(p=0.1, inplace=False), 0 params
+          ), 1,315,072 params
+          (3): TransformerEncoderLayer(
+            (self_attn): MultiheadAttention(
+              (out_proj): Linear(in_features=256, out_features=256, bias=True), 65,792 params
+            ), 263,168 params
+            (linear1): Linear(in_features=256, out_features=2048, bias=True), 526,336 params
+            (dropout): Dropout(p=0.1, inplace=False), 0 params
+            (linear2): Linear(in_features=2048, out_features=256, bias=True), 524,544 params
+            (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True), 512 params
+            (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True), 512 params
+            (dropout1): Dropout(p=0.1, inplace=False), 0 params
+            (dropout2): Dropout(p=0.1, inplace=False), 0 params
+          ), 1,315,072 params
+          (4): TransformerEncoderLayer(
+            (self_attn): MultiheadAttention(
+              (out_proj): Linear(in_features=256, out_features=256, bias=True), 65,792 params
+            ), 263,168 params
+            (linear1): Linear(in_features=256, out_features=2048, bias=True), 526,336 params
+            (dropout): Dropout(p=0.1, inplace=False), 0 params
+            (linear2): Linear(in_features=2048, out_features=256, bias=True), 524,544 params
+            (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True), 512 params
+            (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True), 512 params
+            (dropout1): Dropout(p=0.1, inplace=False), 0 params
+            (dropout2): Dropout(p=0.1, inplace=False), 0 params
+          ), 1,315,072 params
+          (5): TransformerEncoderLayer(
+            (self_attn): MultiheadAttention(
+              (out_proj): Linear(in_features=256, out_features=256, bias=True), 65,792 params
+            ), 263,168 params
+            (linear1): Linear(in_features=256, out_features=2048, bias=True), 526,336 params
+            (dropout): Dropout(p=0.1, inplace=False), 0 params
+            (linear2): Linear(in_features=2048, out_features=256, bias=True), 524,544 params
+            (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True), 512 params
+            (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True), 512 params
+            (dropout1): Dropout(p=0.1, inplace=False), 0 params
+            (dropout2): Dropout(p=0.1, inplace=False), 0 params
+          ), 1,315,072 params
+        ), 7,890,432 params
+        (norm): LayerNorm((256,), eps=1e-05, elementwise_affine=True), 512 params
+      ), 7,890,944 params
+    ), 7,890,944 params
+    (1): Linear(in_features=256, out_features=88, bias=True), 22,616 params
+    (2): Sigmoid(), 0 params
+  ), 7,913,560 params
+  (offset_stack): Sequential(
+    (0): Transformer_AMT(
+      (encoder): TransformerEncoder(
+        (layers): ModuleList(
+          (0): TransformerEncoderLayer(
+            (self_attn): MultiheadAttention(
+              (out_proj): Linear(in_features=256, out_features=256, bias=True), 65,792 params
+            ), 263,168 params
+            (linear1): Linear(in_features=256, out_features=2048, bias=True), 526,336 params
+            (dropout): Dropout(p=0.1, inplace=False), 0 params
+            (linear2): Linear(in_features=2048, out_features=256, bias=True), 524,544 params
+            (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True), 512 params
+            (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True), 512 params
+            (dropout1): Dropout(p=0.1, inplace=False), 0 params
+            (dropout2): Dropout(p=0.1, inplace=False), 0 params
+          ), 1,315,072 params
+          (1): TransformerEncoderLayer(
+            (self_attn): MultiheadAttention(
+              (out_proj): Linear(in_features=256, out_features=256, bias=True), 65,792 params
+            ), 263,168 params
+            (linear1): Linear(in_features=256, out_features=2048, bias=True), 526,336 params
+            (dropout): Dropout(p=0.1, inplace=False), 0 params
+            (linear2): Linear(in_features=2048, out_features=256, bias=True), 524,544 params
+            (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True), 512 params
+            (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True), 512 params
+            (dropout1): Dropout(p=0.1, inplace=False), 0 params
+            (dropout2): Dropout(p=0.1, inplace=False), 0 params
+          ), 1,315,072 params
+          (2): TransformerEncoderLayer(
+            (self_attn): MultiheadAttention(
+              (out_proj): Linear(in_features=256, out_features=256, bias=True), 65,792 params
+            ), 263,168 params
+            (linear1): Linear(in_features=256, out_features=2048, bias=True), 526,336 params
+            (dropout): Dropout(p=0.1, inplace=False), 0 params
+            (linear2): Linear(in_features=2048, out_features=256, bias=True), 524,544 params
+            (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True), 512 params
+            (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True), 512 params
+            (dropout1): Dropout(p=0.1, inplace=False), 0 params
+            (dropout2): Dropout(p=0.1, inplace=False), 0 params
+          ), 1,315,072 params
+          (3): TransformerEncoderLayer(
+            (self_attn): MultiheadAttention(
+              (out_proj): Linear(in_features=256, out_features=256, bias=True), 65,792 params
+            ), 263,168 params
+            (linear1): Linear(in_features=256, out_features=2048, bias=True), 526,336 params
+            (dropout): Dropout(p=0.1, inplace=False), 0 params
+            (linear2): Linear(in_features=2048, out_features=256, bias=True), 524,544 params
+            (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True), 512 params
+            (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True), 512 params
+            (dropout1): Dropout(p=0.1, inplace=False), 0 params
+            (dropout2): Dropout(p=0.1, inplace=False), 0 params
+          ), 1,315,072 params
+          (4): TransformerEncoderLayer(
+            (self_attn): MultiheadAttention(
+              (out_proj): Linear(in_features=256, out_features=256, bias=True), 65,792 params
+            ), 263,168 params
+            (linear1): Linear(in_features=256, out_features=2048, bias=True), 526,336 params
+            (dropout): Dropout(p=0.1, inplace=False), 0 params
+            (linear2): Linear(in_features=2048, out_features=256, bias=True), 524,544 params
+            (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True), 512 params
+            (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True), 512 params
+            (dropout1): Dropout(p=0.1, inplace=False), 0 params
+            (dropout2): Dropout(p=0.1, inplace=False), 0 params
+          ), 1,315,072 params
+          (5): TransformerEncoderLayer(
+            (self_attn): MultiheadAttention(
+              (out_proj): Linear(in_features=256, out_features=256, bias=True), 65,792 params
+            ), 263,168 params
+            (linear1): Linear(in_features=256, out_features=2048, bias=True), 526,336 params
+            (dropout): Dropout(p=0.1, inplace=False), 0 params
+            (linear2): Linear(in_features=2048, out_features=256, bias=True), 524,544 params
+            (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True), 512 params
+            (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True), 512 params
+            (dropout1): Dropout(p=0.1, inplace=False), 0 params
+            (dropout2): Dropout(p=0.1, inplace=False), 0 params
+          ), 1,315,072 params
+        ), 7,890,432 params
+        (norm): LayerNorm((256,), eps=1e-05, elementwise_affine=True), 512 params
+      ), 7,890,944 params
+    ), 7,890,944 params
+    (1): Linear(in_features=256, out_features=88, bias=True), 22,616 params
+    (2): Sigmoid(), 0 params
+  ), 7,913,560 params
+  (frame_stack): Sequential(
+    (0): Transformer_AMT(
+      (encoder): TransformerEncoder(
+        (layers): ModuleList(
+          (0): TransformerEncoderLayer(
+            (self_attn): MultiheadAttention(
+              (out_proj): Linear(in_features=256, out_features=256, bias=True), 65,792 params
+            ), 263,168 params
+            (linear1): Linear(in_features=256, out_features=2048, bias=True), 526,336 params
+            (dropout): Dropout(p=0.1, inplace=False), 0 params
+            (linear2): Linear(in_features=2048, out_features=256, bias=True), 524,544 params
+            (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True), 512 params
+            (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True), 512 params
+            (dropout1): Dropout(p=0.1, inplace=False), 0 params
+            (dropout2): Dropout(p=0.1, inplace=False), 0 params
+          ), 1,315,072 params
+          (1): TransformerEncoderLayer(
+            (self_attn): MultiheadAttention(
+              (out_proj): Linear(in_features=256, out_features=256, bias=True), 65,792 params
+            ), 263,168 params
+            (linear1): Linear(in_features=256, out_features=2048, bias=True), 526,336 params
+            (dropout): Dropout(p=0.1, inplace=False), 0 params
+            (linear2): Linear(in_features=2048, out_features=256, bias=True), 524,544 params
+            (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True), 512 params
+            (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True), 512 params
+            (dropout1): Dropout(p=0.1, inplace=False), 0 params
+            (dropout2): Dropout(p=0.1, inplace=False), 0 params
+          ), 1,315,072 params
+          (2): TransformerEncoderLayer(
+            (self_attn): MultiheadAttention(
+              (out_proj): Linear(in_features=256, out_features=256, bias=True), 65,792 params
+            ), 263,168 params
+            (linear1): Linear(in_features=256, out_features=2048, bias=True), 526,336 params
+            (dropout): Dropout(p=0.1, inplace=False), 0 params
+            (linear2): Linear(in_features=2048, out_features=256, bias=True), 524,544 params
+            (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True), 512 params
+            (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True), 512 params
+            (dropout1): Dropout(p=0.1, inplace=False), 0 params
+            (dropout2): Dropout(p=0.1, inplace=False), 0 params
+          ), 1,315,072 params
+          (3): TransformerEncoderLayer(
+            (self_attn): MultiheadAttention(
+              (out_proj): Linear(in_features=256, out_features=256, bias=True), 65,792 params
+            ), 263,168 params
+            (linear1): Linear(in_features=256, out_features=2048, bias=True), 526,336 params
+            (dropout): Dropout(p=0.1, inplace=False), 0 params
+            (linear2): Linear(in_features=2048, out_features=256, bias=True), 524,544 params
+            (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True), 512 params
+            (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True), 512 params
+            (dropout1): Dropout(p=0.1, inplace=False), 0 params
+            (dropout2): Dropout(p=0.1, inplace=False), 0 params
+          ), 1,315,072 params
+          (4): TransformerEncoderLayer(
+            (self_attn): MultiheadAttention(
+              (out_proj): Linear(in_features=256, out_features=256, bias=True), 65,792 params
+            ), 263,168 params
+            (linear1): Linear(in_features=256, out_features=2048, bias=True), 526,336 params
+            (dropout): Dropout(p=0.1, inplace=False), 0 params
+            (linear2): Linear(in_features=2048, out_features=256, bias=True), 524,544 params
+            (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True), 512 params
+            (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True), 512 params
+            (dropout1): Dropout(p=0.1, inplace=False), 0 params
+            (dropout2): Dropout(p=0.1, inplace=False), 0 params
+          ), 1,315,072 params
+          (5): TransformerEncoderLayer(
+            (self_attn): MultiheadAttention(
+              (out_proj): Linear(in_features=256, out_features=256, bias=True), 65,792 params
+            ), 263,168 params
+            (linear1): Linear(in_features=256, out_features=2048, bias=True), 526,336 params
+            (dropout): Dropout(p=0.1, inplace=False), 0 params
+            (linear2): Linear(in_features=2048, out_features=256, bias=True), 524,544 params
+            (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True), 512 params
+            (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True), 512 params
+            (dropout1): Dropout(p=0.1, inplace=False), 0 params
+            (dropout2): Dropout(p=0.1, inplace=False), 0 params
+          ), 1,315,072 params
+        ), 7,890,432 params
+        (norm): LayerNorm((256,), eps=1e-05, elementwise_affine=True), 512 params
+      ), 7,890,944 params
+    ), 7,890,944 params
+    (1): Linear(in_features=256, out_features=88, bias=True), 22,616 params
+    (2): Sigmoid(), 0 params
+  ), 7,913,560 params
+  (combined_stack): Sequential(
+    (0): Transformer_AMT(
+      (encoder): TransformerEncoder(
+        (layers): ModuleList(
+          (0): TransformerEncoderLayer(
+            (self_attn): MultiheadAttention(
+              (out_proj): Linear(in_features=264, out_features=264, bias=True), 69,960 params
+            ), 279,840 params
+            (linear1): Linear(in_features=264, out_features=2048, bias=True), 542,720 params
+            (dropout): Dropout(p=0.1, inplace=False), 0 params
+            (linear2): Linear(in_features=2048, out_features=264, bias=True), 540,936 params
+            (norm1): LayerNorm((264,), eps=1e-05, elementwise_affine=True), 528 params
+            (norm2): LayerNorm((264,), eps=1e-05, elementwise_affine=True), 528 params
+            (dropout1): Dropout(p=0.1, inplace=False), 0 params
+            (dropout2): Dropout(p=0.1, inplace=False), 0 params
+          ), 1,364,552 params
+          (1): TransformerEncoderLayer(
+            (self_attn): MultiheadAttention(
+              (out_proj): Linear(in_features=264, out_features=264, bias=True), 69,960 params
+            ), 279,840 params
+            (linear1): Linear(in_features=264, out_features=2048, bias=True), 542,720 params
+            (dropout): Dropout(p=0.1, inplace=False), 0 params
+            (linear2): Linear(in_features=2048, out_features=264, bias=True), 540,936 params
+            (norm1): LayerNorm((264,), eps=1e-05, elementwise_affine=True), 528 params
+            (norm2): LayerNorm((264,), eps=1e-05, elementwise_affine=True), 528 params
+            (dropout1): Dropout(p=0.1, inplace=False), 0 params
+            (dropout2): Dropout(p=0.1, inplace=False), 0 params
+          ), 1,364,552 params
+          (1): TransformerEncoderLayer(
+            (self_attn): MultiheadAttention(
+              (out_proj): Linear(in_features=264, out_features=264, bias=True), 69,960 params
+            ), 279,840 params
+            (linear1): Linear(in_features=264, out_features=2048, bias=True), 542,720 params
+            (dropout): Dropout(p=0.1, inplace=False), 0 params
+            (linear2): Linear(in_features=2048, out_features=264, bias=True), 540,936 params
+            (norm1): LayerNorm((264,), eps=1e-05, elementwise_affine=True), 528 params
+            (norm2): LayerNorm((264,), eps=1e-05, elementwise_affine=True), 528 params
+            (dropout1): Dropout(p=0.1, inplace=False), 0 params
+            (dropout2): Dropout(p=0.1, inplace=False), 0 params
+          ), 1,364,552 params
+          (2): TransformerEncoderLayer(
+            (self_attn): MultiheadAttention(
+              (out_proj): Linear(in_features=264, out_features=264, bias=True), 69,960 params
+            ), 279,840 params
+            (linear1): Linear(in_features=264, out_features=2048, bias=True), 542,720 params
+            (dropout): Dropout(p=0.1, inplace=False), 0 params
+            (linear2): Linear(in_features=2048, out_features=264, bias=True), 540,936 params
+            (norm1): LayerNorm((264,), eps=1e-05, elementwise_affine=True), 528 params
+            (norm2): LayerNorm((264,), eps=1e-05, elementwise_affine=True), 528 params
+            (dropout1): Dropout(p=0.1, inplace=False), 0 params
+            (dropout2): Dropout(p=0.1, inplace=False), 0 params
+          ), 1,364,552 params
+          (3): TransformerEncoderLayer(
+            (self_attn): MultiheadAttention(
+              (out_proj): Linear(in_features=264, out_features=264, bias=True), 69,960 params
+            ), 279,840 params
+            (linear1): Linear(in_features=264, out_features=2048, bias=True), 542,720 params
+            (dropout): Dropout(p=0.1, inplace=False), 0 params
+            (linear2): Linear(in_features=2048, out_features=264, bias=True), 540,936 params
+            (norm1): LayerNorm((264,), eps=1e-05, elementwise_affine=True), 528 params
+            (norm2): LayerNorm((264,), eps=1e-05, elementwise_affine=True), 528 params
+            (dropout1): Dropout(p=0.1, inplace=False), 0 params
+            (dropout2): Dropout(p=0.1, inplace=False), 0 params
+          ), 1,364,552 params
+          (4): TransformerEncoderLayer(
+            (self_attn): MultiheadAttention(
+              (out_proj): Linear(in_features=264, out_features=264, bias=True), 69,960 params
+            ), 279,840 params
+            (linear1): Linear(in_features=264, out_features=2048, bias=True), 542,720 params
+            (dropout): Dropout(p=0.1, inplace=False), 0 params
+            (linear2): Linear(in_features=2048, out_features=264, bias=True), 540,936 params
+            (norm1): LayerNorm((264,), eps=1e-05, elementwise_affine=True), 528 params
+            (norm2): LayerNorm((264,), eps=1e-05, elementwise_affine=True), 528 params
+            (dropout1): Dropout(p=0.1, inplace=False), 0 params
+            (dropout2): Dropout(p=0.1, inplace=False), 0 params
+          ), 1,364,552 params
+          (5): TransformerEncoderLayer(
+            (self_attn): MultiheadAttention(
+              (out_proj): Linear(in_features=264, out_features=264, bias=True), 69,960 params
+            ), 279,840 params
+            (linear1): Linear(in_features=264, out_features=2048, bias=True), 542,720 params
+            (dropout): Dropout(p=0.1, inplace=False), 0 params
+            (linear2): Linear(in_features=2048, out_features=264, bias=True), 540,936 params
+            (norm1): LayerNorm((264,), eps=1e-05, elementwise_affine=True), 528 params
+            (norm2): LayerNorm((264,), eps=1e-05, elementwise_affine=True), 528 params
+            (dropout1): Dropout(p=0.1, inplace=False), 0 params
+            (dropout2): Dropout(p=0.1, inplace=False), 0 params
+          ), 1,364,552 params
+        ), 8,187,312 params
+        (norm): LayerNorm((264,), eps=1e-05, elementwise_affine=True), 528 params
+      ), 8,187,840 params
+    ), 8,187,840 params
+    (1): Linear(in_features=264, out_features=88, bias=True), 23,320 params
+    (2): Sigmoid(), 0 params
+  ), 8,211,160 params
+  (velocity_stack): Sequential(
+    (0): ConvStack(
+      (cnn): Sequential(
+        (0): Conv2d(1, 48, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)), 480 params
+        (1): BatchNorm2d(48, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True), 96 params
+        (2): ReLU(), 0 params
+        (3): Conv2d(48, 48, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)), 20,784 params
+        (4): BatchNorm2d(48, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True), 96 params
+        (5): ReLU(), 0 params
+        (6): MaxPool2d(kernel_size=(1, 2), stride=(1, 2), padding=0, dilation=1, ceil_mode=False), 0 params
+        (7): Dropout(p=0.25, inplace=False), 0 params
+        (8): Conv2d(48, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)), 41,568 params
+        (9): BatchNorm2d(96, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True), 192 params
+        (10): ReLU(), 0 params
+        (11): MaxPool2d(kernel_size=(1, 2), stride=(1, 2), padding=0, dilation=1, ceil_mode=False), 0 params
+        (12): Dropout(p=0.25, inplace=False), 0 params
+      ), 63,216 params
+      (fc): Sequential(
+        (0): Linear(in_features=6144, out_features=768, bias=True), 4,719,360 params
+        (1): Dropout(p=0.5, inplace=False), 0 params
+      ), 4,719,360 params
+    ), 4,782,576 params
+    (1): Linear(in_features=768, out_features=88, bias=True), 67,672 params
+  ), 4,850,248 params
+), 36,802,088 params
