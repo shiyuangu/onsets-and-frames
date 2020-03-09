@@ -84,7 +84,7 @@ class OnsetsAndFrames(nn.Module):
         #sgu: output_size is half so that two direction together output_size 
         #sequence_model = lambda input_size, output_size: BiLSTM(input_size, output_size // 2)
         sequence_model = lambda input_size: Transformer_AMT(input_size,
-                                num_encoder_layers=1, dim_feedforward=input_size)
+                                num_encoder_layers=2, dim_feedforward=input_size)
         self.pos_enc = PositionalEncoding(input_features)
         self.onset_stack = nn.Sequential(
             #ConvStack(input_features, model_size),
