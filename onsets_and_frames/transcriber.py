@@ -4,6 +4,7 @@ A rough translation of Magenta's Onsets and Frames implementation [1].
     [1] https://github.com/tensorflow/magenta/blob/master/magenta/models/onsets_frames_transcription/model.py
 """
 
+import math
 import torch
 import torch.nn.functional as F
 from torch import nn
@@ -51,6 +52,27 @@ class ConvStack(nn.Module):
         x = self.fc(x)
         return x
 
+class PositionalEncoding(nn.Module):
+
+    def __init__(self, d_model, dropout=0.1, max_len=2500):
+        super(PositionalEncoding, self).__init__()
+        self.dropout = nn.Dropout(p=dropout)
+
+        pe = torch.zeros(max_len, d_model)
+        position = torch.arange(0, max_len, dtype=torch.float).unsqueeze(1)
+        div_term = torch.exp(torch.arange(0, d_model, 2).float() * (-math.log(100000.0) / d_model))
+        pe[:, 0::2] = torch.sin(position * div_term) # (seq_len, d_model)
+        pe[:, 1::2] = torch.cos(position * div_term)
+        pe = pe.unsqueeze(0) #add batch dimension
+        self.register_buffer('pe', pe)
+
+    def forward(self, x):
+        """
+        :param x: shape (batch_size, seq_len, d_model)
+        """
+        x = x + self.pe[:, :x.size(1)]
+        return self.dropout(x)
+    
 class OnsetsAndFrames(nn.Module):
     #output_feature is MAX_MIDI-MIN_MIDI +1 =88
     #input_features = N_MEL = 229 by default 
@@ -61,7 +83,9 @@ class OnsetsAndFrames(nn.Module):
 
         #sgu: output_size is half so that two direction together output_size 
         #sequence_model = lambda input_size, output_size: BiLSTM(input_size, output_size // 2)
-        sequence_model = lambda input_size: Transformer_AMT(input_size)
+        sequence_model = lambda input_size: Transformer_AMT(input_size,
+                                num_encoder_layers=1, dim_feedforward=input_size)
+        self.pos_enc = PositionalEncoding(input_features)
         self.onset_stack = nn.Sequential(
             #ConvStack(input_features, model_size),
             #sequence_model(model_size, model_size),
@@ -95,9 +119,10 @@ class OnsetsAndFrames(nn.Module):
         )
 
     def forward(self, mel):
-        onset_pred = self.onset_stack(mel)
-        offset_pred = self.offset_stack(mel)
-        activation_pred = self.frame_stack(mel)
+        x = self.pos_enc(mel)
+        onset_pred = self.onset_stack(x)
+        offset_pred = self.offset_stack(x)
+        activation_pred = self.frame_stack(x)
         # sgu: why to use detach()?
         # tensor.detach() :  creates a tensor that shares storage with tensor that does not require grad
         combined_pred = torch.cat([onset_pred.detach(), offset_pred.detach(), activation_pred], dim=-1)
@@ -113,6 +138,7 @@ class OnsetsAndFrames(nn.Module):
         velocity_label = batch['velocity']
 
         mel = melspectrogram(audio_label.reshape(-1, audio_label.shape[-1])[:, :-1]).transpose(-1, -2)
+
         onset_pred, offset_pred, _, frame_pred, velocity_pred = self(mel)
 
         predictions = {
