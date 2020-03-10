@@ -119,7 +119,8 @@ class OnsetsAndFrames(nn.Module):
         )
 
     def forward(self, mel):
-        x = self.pos_enc(mel)
+        #x = self.pos_enc(mel)
+        x = mel
         onset_pred = self.onset_stack(x)
         offset_pred = self.offset_stack(x)
         activation_pred = self.frame_stack(x)
