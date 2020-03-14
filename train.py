@@ -25,6 +25,7 @@ def config():
     resume_iteration = None
     checkpoint_interval = 1000
     train_on = 'MAESTRO'
+    layer_name = "original" 
 
     batch_size = 8
     sequence_length = 327680
@@ -52,7 +53,8 @@ def config():
 @ex.automain
 def train(logdir, device, iterations, resume_iteration, checkpoint_interval, train_on, batch_size, sequence_length,
           model_complexity, learning_rate, learning_rate_decay_steps, learning_rate_decay_rate, leave_one_out,
-          clip_gradient_norm, validation_length, validation_interval):
+          clip_gradient_norm, validation_length, validation_interval,
+          layer_name):
     print_config(ex.current_run)
 
     os.makedirs(logdir, exist_ok=True)
@@ -75,7 +77,8 @@ def train(logdir, device, iterations, resume_iteration, checkpoint_interval, tra
     loader = DataLoader(dataset, batch_size, shuffle=True, drop_last=True)
 
     if resume_iteration is None:
-        model = OnsetsAndFrames(N_MELS, MAX_MIDI - MIN_MIDI + 1, model_complexity).to(device)
+        model = OnsetsAndFrames(N_MELS, MAX_MIDI - MIN_MIDI + 1,
+                                model_complexity, layer_name).to(device)
         optimizer = torch.optim.Adam(model.parameters(), learning_rate)
         resume_iteration = 0
     else:

@@ -11,13 +11,17 @@ class BiLSTM(nn.Module):
         # since batch_first = True, input and output shape is (batch, seq, feature)
         self.rnn = nn.LSTM(input_features, recurrent_features, batch_first=True, bidirectional=True) 
 
-    def forward(self, x):
+    def forward(self, x, need_states=False):
         """
         sgu:
         x: shape (batch, seq, model_size) where model_size = model_complexity * 16 
         """
         if self.training:
-            return self.rnn(x)[0] #(h_0, c_0) are zeros 
+            y, (h, c) = self.rnn(x)
+            if need_states:
+                return y, (h,c)
+            else:
+                return y
         else:
             # evaluation mode: support for longer sequences that do not fit in memory
             batch_size, sequence_length, input_features = x.shape
@@ -36,6 +40,10 @@ class BiLSTM(nn.Module):
 
             # reverse direction
             if self.rnn.bidirectional:
+                #save hidden states of forward direction 
+                h_f = h[0,:].clone().detach().unsqueeze(0)
+                c_f = c[0,:].clone().detach().unsqueeze(0)
+                
                 h.zero_()
                 c.zero_()
 
@@ -44,4 +52,12 @@ class BiLSTM(nn.Module):
                     result, (h, c) = self.rnn(x[:, start:end, :], (h, c))
                     output[:, start:end, hidden_size:] = result[:, :, hidden_size:]
 
-            return output
+                #save hidden states of backward direction 
+                h_b = h[1,:].clone().detach().unsqueeze(0)
+                c_b = c[1,:].clone().detach().unsqueeze(0)
+                h = torch.cat([h_f, h_b], dim=0)
+                c = torch.cat([c_f, c_b], dim=0)
+            if need_states:
+                return output, (h,c)
+            else:
+                return output 

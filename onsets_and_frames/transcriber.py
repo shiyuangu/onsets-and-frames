@@ -10,71 +10,31 @@ from torch import nn
 
 from .lstm import BiLSTM
 from .mel import melspectrogram
-
-
-class ConvStack(nn.Module):
-    """
-    This is the acoustic model in the onset and frame paper 
-    """
-    def __init__(self, input_features, output_features):
-        super().__init__()
-
-        # input is batch_size * 1 channel * frames * input_features
-        self.cnn = nn.Sequential(
-            # layer 0
-            nn.Conv2d(1, output_features // 16, (3, 3), padding=1),
-            nn.BatchNorm2d(output_features // 16),
-            nn.ReLU(),
-            # layer 1
-            nn.Conv2d(output_features // 16, output_features // 16, (3, 3), padding=1),
-            nn.BatchNorm2d(output_features // 16),
-            nn.ReLU(),
-            # layer 2
-            nn.MaxPool2d((1, 2)),
-            nn.Dropout(0.25),
-            nn.Conv2d(output_features // 16, output_features // 8, (3, 3), padding=1),
-            nn.BatchNorm2d(output_features // 8),
-            nn.ReLU(),
-            # layer 3
-            nn.MaxPool2d((1, 2)),
-            nn.Dropout(0.25),
-        )
-        self.fc = nn.Sequential(
-            nn.Linear((output_features // 8) * (input_features // 4), output_features),
-            nn.Dropout(0.5)
-        )
-
-    def forward(self, mel):
-        x = mel.view(mel.size(0), 1, mel.size(1), mel.size(2)) #1 is the channel
-        x = self.cnn(x)
-        x = x.transpose(1, 2).flatten(-2)
-        x = self.fc(x)
-        return x
-
+from .layers import *
 
 class OnsetsAndFrames(nn.Module):
-    #output_feature is MAX_MIDI-MIN_MIDI +1 =88
+    #output_features is MAX_MIDI-MIN_MIDI +1 =88
     #input_features = N_MEL = 229 by default 
-    def __init__(self, input_features, output_features, model_complexity=48):
+    def __init__(self, input_features, output_features, model_complexity=48,
+                 layer_name = "original"):
         super().__init__()
 
         model_size = model_complexity * 16
 
         #sgu: output_size is half so that two direction together output_size 
         sequence_model = lambda input_size, output_size: BiLSTM(input_size, output_size // 2)
+        
 
-        self.onset_stack = nn.Sequential(
-            ConvStack(input_features, model_size),
-            sequence_model(model_size, model_size),
-            nn.Linear(model_size, output_features),
-            nn.Sigmoid()
-        )
-        self.offset_stack = nn.Sequential(
-            ConvStack(input_features, model_size),
-            sequence_model(model_size, model_size),
-            nn.Linear(model_size, output_features),
-            nn.Sigmoid()
-        )
+        self.onset_stack = get_layers(layer_name ,
+                        input_features=input_features,
+                        output_features=output_features,
+                        model_size=model_size)
+        
+        self.offset_stack =  get_layers(layer_name ,
+                        input_features=input_features,
+                        output_features=output_features,
+                        model_size=model_size)
+        
         self.frame_stack = nn.Sequential(
             ConvStack(input_features, model_size),
             nn.Linear(model_size, output_features),

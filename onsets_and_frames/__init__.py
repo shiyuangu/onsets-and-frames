@@ -5,3 +5,6 @@ from .mel import melspectrogram
 from .midi import save_midi
 from .transcriber import OnsetsAndFrames
 from .utils import summary, save_pianoroll, cycle
+from .lstm import BiLSTM
+from .transcriber import ConvStack
+from .layers import * 
